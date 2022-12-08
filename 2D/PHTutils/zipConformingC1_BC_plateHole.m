@@ -1,0 +1,44 @@
+function [ coefSol ] = zipConformingC1_BC_plateHole( PHUTelem,m,p,q )
+%apply boundary condition to m
+
+right_nodes2 = (p+1)-1:(p+1):(p+1)*(q+1)-1;
+right_nodes1 = (p+1):(p+1):(p+1)*(q+1);
+
+left_nodes1 = 1:(p+1):(1+(p+1)*q);
+left_nodes2 = 2:(p+1):(1+(p+1)*q)+1;
+
+down_nodes1=1:(p+1);
+down_nodes2=down_nodes1+(p+1);
+
+up_nodes1=(p+1)*(q+1)-p:(p+1)*(q+1);
+up_nodes2=up_nodes1-(p+1);
+
+% %======================= apply boundary condition =========================
+% list=[];
+% for indexPatch=1:4
+%     
+%     tempElem= sortEdgeElem( PHUTelem{indexPatch}, 1);
+%     tempElem=cell2mat(tempElem);
+%     elem=[tempElem(1),tempElem(end)];
+%     
+%     for indexElem=elem
+%         list=[list,PHUTelem{indexPatch}(indexElem).solIndex(down_nodes1),PHUTelem{indexPatch}(indexElem).solIndex(down_nodes2)];
+%     end
+%     
+% end
+% 
+% list=nonzeros(list);
+% list=unique(list);
+% m(:,list) = [];
+% tempCoefSol = nullMDS(m);
+% %add rows of zeros
+% coefSol=zeros(size(tempCoefSol,1)+length(list),size(tempCoefSol,2));
+% count=0;
+% for indexRow=1:size(coefSol,1)
+%     if  ~ismember(indexRow,list)
+%         count=count+1;
+%         coefSol(indexRow,:)=tempCoefSol(count,:);
+%     end
+% end
+
+coefSol = nullMDS(m);
